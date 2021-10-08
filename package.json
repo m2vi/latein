@@ -1,18 +1,8 @@
 {
-  "name": "smarto",
-  "description": "A hub for private use",
-  "author": {
-    "name": "m2vi",
-    "url": "https://github.com/m2vi"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/m2vi/smarto"
-  },
-  "homepage": "https://github.com/m2vi/smarto",
+  "name": "latein",
   "license": "MIT",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
