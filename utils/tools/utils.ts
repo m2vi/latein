@@ -4,5 +4,3 @@ export const baseUrl = (req: any) => {
 
   return baseUrl;
 };
-
-export const varToString = varObj => Object.keys(varObj)[0];
