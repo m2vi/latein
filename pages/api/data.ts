@@ -8,7 +8,7 @@ export const data = async (_: NextApiRequest, res: NextApiResponse) => {
   const { access } = await withProtection(_, res);
   if (!access) return;
 
-  const html = await fetchWithCache(process.env.PAGE_URL);
+  const html = await fetchWithCache(process.env.PAGE_URL, 60 * 24 * 1000);
   const json = toJSON(html);
 
   res.status(200).json({

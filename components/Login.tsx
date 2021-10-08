@@ -8,10 +8,9 @@ import Head from 'next/head';
 
 const Login = () => {
   return (
-    <Full className="grid place-items-center">
+    <Full className="h-screen grid place-items-center">
       <Head>
         <title>Login</title>
-        <link rel="icon" type="image/svg+xml" href="/favicon/filmlist/favicon.svg" />
       </Head>
       <Input placeholder="the word" className="max-w-xs mb-8" />
     </Full>
