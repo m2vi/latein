@@ -1,38 +1,42 @@
 import Full from '@components/Full';
-import { basicFetch } from '@utils/db/fetch';
-import auth from '@utils/security/auth';
-import { baseUrl } from '@utils/tools/utils';
+import { baseUrl, hasCookie } from '@utils/tools/utils';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
 const Index = ({ data }) => {
   return (
-    <Full className="py-8 flex justify-center items-center w-full">
+    <Full className="py-8 flex  flex-col justify-center items-center w-full">
       <Head>
         <title>Latein Lösungen</title>
       </Head>
-      <div className="flex flex-col w-full max-w-xl h-full p-6 bg-primary-600 rounded-8">
-        {data.lektionen.map(({ text, href }, i: number) => {
+
+      <div className="flex flex-col w-full max-w-xl h-full p-4 bg-primary-800 rounded-8 mb-4">
+        {data.chapters.map(({ chapter, title, url }, i: number) => {
           return (
-            <a href={href} key={i}>
-              {text}
+            <a href={url} key={i} className="text-accent hover:text-accent-hover">
+              Lektion {chapter} - {title}
             </a>
           );
         })}
-        <br />
-        {data.repetitiones.map(({ text, href }, i: number) => {
+      </div>
+      <div className="flex flex-col w-full max-w-xl h-full p-4 bg-primary-800 rounded-8 mb-4">
+        {data.repetitions.map(({ chapters, url }, i: number) => {
           return (
-            <a href={href} key={i}>
-              {text}
+            <a href={url} key={i} className="text-accent hover:text-accent-hover">
+              Repetitiones {chapters}
             </a>
           );
         })}
+      </div>
+      <div className="flex w-full max-w-xl h-full p-4 bg-primary-800 rounded-8">
+        <span className="text-default font-bold">ACHTUNG: Lösungen nur zur Überprüfung geeignet!</span>
       </div>
     </Full>
   );
 };
 
-export async function getServerSideProps({ locale, req }) {
-  const token = await auth.pageAuth(req);
+export const getServerSideProps: GetServerSideProps = async context => {
+  const token = hasCookie(context);
   if (!token) {
     return {
       redirect: {
@@ -43,10 +47,10 @@ export async function getServerSideProps({ locale, req }) {
   } else {
     return {
       props: {
-        data: await basicFetch(`${baseUrl(req)}/api/data?token=${process.env.API_TOKEN}`),
+        data: await (await fetch(`${baseUrl(context.req)}/api/data`)).json(),
       },
     };
   }
-}
+};
 
 export default Index;

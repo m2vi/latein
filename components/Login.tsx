@@ -3,8 +3,8 @@ import React, { HTMLAttributes, useRef, useState } from 'react';
 import Full from './Full';
 import { IoLockClosed } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import auth from '@utils/security/auth';
 import Head from 'next/head';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   return (
@@ -47,7 +47,7 @@ export const Input = ({ className, ...props }: HTMLAttributes<HTMLInputElement>)
           }
 
           if (data.token) {
-            auth.createCookie(data.token);
+            Cookies.set('jwt', data.token, { expires: 7, path: '/' });
             Router.replace('/');
           }
         });

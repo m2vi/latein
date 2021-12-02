@@ -1,12 +1,14 @@
 import LoginPage from '@components/Login';
-import auth from '@utils/security/auth';
+import { hasCookie } from '@utils/tools/utils';
+import jwt from 'jsonwebtoken';
+import { GetServerSideProps } from 'next';
 
 const Login = () => <LoginPage />;
 
 export default Login;
 
-export async function getServerSideProps({ locale, req }) {
-  const token = await auth.pageAuth(req);
+export const getServerSideProps: GetServerSideProps = async context => {
+  const token = hasCookie(context);
 
   if (!token) {
     return {
@@ -16,8 +18,8 @@ export async function getServerSideProps({ locale, req }) {
     return {
       redirect: {
         permanent: false,
-        destination: `/browse`,
+        destination: `/`,
       },
     };
   }
-}
+};
