@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from 'next';
+import jwt from 'jsonwebtoken';
 
 export const baseUrl = (req: any) => {
   const protocol = req.headers['x-forwarded-proto'] || 'http';
@@ -8,7 +9,15 @@ export const baseUrl = (req: any) => {
 };
 
 export const hasCookie = (context: GetServerSidePropsContext) => {
-  const jwt = context.req.cookies.jwt;
+  const cookie = context.req.cookies.jwt;
 
-  return !!jwt;
+  try {
+    if (cookie) {
+      return !!jwt.verify(cookie, process.env.JWT_SECRET);
+    }
+
+    throw Error();
+  } catch (error) {
+    return false;
+  }
 };

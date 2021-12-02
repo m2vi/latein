@@ -57,7 +57,7 @@ export const Input = ({ className, ...props }: HTMLAttributes<HTMLInputElement>)
   };
 
   return (
-    <span className={`border mb-8 rounded-8 overflow-hidden border-input ${extraClass}`}>
+    <span className={`mb-8 rounded-8 overflow-hidden border border-primary-700 ${extraClass}`}>
       <form
         className="flex w-full items-center overflow-hidden"
         style={{

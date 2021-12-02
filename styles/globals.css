@@ -1,2 +1,7 @@
 @import url('https://dev.core.fluxi.ml/styles/colors.css');
 @import url('https://dev.core.fluxi.ml/styles/globals.css');
+
+*:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
